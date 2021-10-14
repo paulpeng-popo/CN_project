@@ -1,0 +1,24 @@
++----------+
+| socket() |
++----------+
+      |  set server ip_address
+      V  set server port
++----------+
+|threeway()| connect to server
++----------+
+      |
+      V
++----------+ multiple requests
+| receive()|<---+
++----------+    |
+      |         |
+      |---------+
+      V send ack(EOF)
++----------+
+| fourway()|
++----------+
+      |
+      V
++----------+
+|close sock|
++----------+

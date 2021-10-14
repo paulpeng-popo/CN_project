@@ -1,0 +1,28 @@
++----------+
+| socket() |
++----------+
+      |             create connection queue
+      V                   head, tail
++----------+                   ^           +---------------+
+|  bind()  |                   |           |   fourway()   |
++----------+                   |           |  pthread exit |
+      |                        /           +---------------+
+      V                       /                    ^
++----------+                 /                     |
+| show_info|                /                      |
++----------+ pthread_create/               +---------------+
+      |--------------+    /                |    action()   |
+      |              |   /                 |file, dns, math|
+      V              V  /                  +---------------+
++----------+    +----------+ a client connect      ^
+| accept() |    | listen() |<---+                  |
++----------+   /+----------+    |                  |
+ ^    |     \ /       |pushqueue|                  |
+ |    |      V        +---------+            +----------+
+ +----| if queue not empty                   |threeway()|
+      | pthread_create                       +----------+
+      V                                            ^
++----------+                                       |
+| connect()|                                       |
+|setsockopt|---------------------------------------+
++----------+
